@@ -1,0 +1,14 @@
+{% extends "api/base.html" %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="mb-3">
+      <div class="form-label">{{ field.label_tag }}</div>
+      <div class="form-label">{{ field }}</div>
+    </div>
+  {% endfor %}
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
