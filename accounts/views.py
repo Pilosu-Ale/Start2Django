@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import FormRegistration
 from django.contrib.auth.models import User
