@@ -4,11 +4,12 @@ import json
 from django.utils import timezone
 from django.http import JsonResponse
 from .models import Post
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .forms import PostForm
 from django.db.models import Count
+from datetime import timedelta
 
 
 def posts(request):
@@ -55,12 +56,11 @@ def newPost(request):
 
 
 def homepage(request):
-    postList = Post.objects.filter().order_by('datetime')
+    postList = Post.objects.filter().order_by('-datetime')
 
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             username = User.objects.get(username=f"{request.user}")
@@ -78,7 +78,47 @@ def userPage(request, pk):
     context = {"user": user}
     return render(request, "api/userPage.html", context)
 
+
+@staff_member_required
 def usersList(request):
-    user_posts = User.objects.annotate(total_posts = Count('post'))
+    user_posts = User.objects.annotate(total_posts=Count('post'))
 
     return render(request, "api/users_list.html", {'user_posts': user_posts})
+
+
+def posts1h(request):
+    response = []
+    postList = Post.objects.filter(datetime__gte=timezone.now() - timedelta(hours=1))
+    for post in postList:
+        response.append(
+            {
+                'datetime': post.datetime,
+                'content': post.content,
+                'author': f"{post.user}",
+                'txId': post.txId,
+                'hash': post.hash,
+            }
+        )
+    return JsonResponse(response, safe=False)
+
+
+def controlString(request, word):
+    response = []
+    postList = Post.objects.filter().order_by('-datetime')
+    countString = 0
+    for post in postList:
+        if word in post.content:
+            countString += 1
+        if word in post.title:
+            countString += 1
+        if word in post.hash:
+            countString += 1
+        if word in post.txId:
+            countString += 1
+
+    response.append(
+        {
+            'countString': countString
+        }
+    )
+    return JsonResponse(response, safe=False)

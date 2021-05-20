@@ -4,6 +4,6 @@
 
 {% block content %}
   {% for user in user_posts  %}
-    <p>{{user.username}} has written {{ user.total_posts }} posts so far <p>
+    <p>{{user.username}}: {{ user.total_posts }} posts<p>
   {% endfor %}
 {% endblock %}

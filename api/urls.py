@@ -7,4 +7,6 @@ urlpatterns = [
     path('new_post/', views.newPost),
     path('utente/<int:pk>/', views.userPage, name="userPage"),
     path('users_list/', views.usersList, name="userList"),
+    path('post1h/', views.posts1h),
+    path('control_string/<slug:word>/', views.controlString)
 ]
