@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .forms import PostForm
+from django.db.models import Count
 
 
 def posts(request):
@@ -53,7 +54,6 @@ def newPost(request):
     return JsonResponse(response, safe=False)
 
 
-@login_required
 def homepage(request):
     postList = Post.objects.filter().order_by('datetime')
 
@@ -77,3 +77,8 @@ def userPage(request, pk):
     user = get_object_or_404(User, pk=pk)
     context = {"user": user}
     return render(request, "api/userPage.html", context)
+
+def usersList(request):
+    user_posts = User.objects.annotate(total_posts = Count('post'))
+
+    return render(request, "api/users_list.html", {'user_posts': user_posts})
