@@ -4,30 +4,41 @@
 {% block head_title %} {{ block.super }} {% endblock head_title %}
 
 {% block content %}
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center">
     {% if request.user.is_authenticated %}
-    {% for post in postList %}
-    <div class="container m-3">
-        <p>{{ post.datetime }}</p>
-        <p>{{ post.title }}</p>
-        <p>{{ post.content }}</p>
-        <p>{{ post.user }}</p>
-        <p>{{ post.txId }}</p>
-        <p>{{ post.hash }}</p>
+    <div class="col-lg-5">
+        <div class="p-3 forms m-3">
+            <form class="crispy" action="{% url 'homepage' %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" class="btn buttons" value="Create Post">
+            </form>
+        </div>
     </div>
-    {% endfor %}
-    <div class="col-4">
-        <form action="{% url 'homepage' %}" method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <input type="submit" class="btn btn-info" value="Create Post">
-        </form>
+
+    <div class="col-lg-5">
+        {% for post in postList %}
+        <div class="card m-3 rounded card-custom">
+            <div class="card-body">
+                <p class="card-title fs-3">{{ post.title }}</p>
+                <p class="card-text">{{ post.content }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item card-item">TxID {{ post.txId }}</li>
+                <li class="list-group-item card-item">Hash {{ post.hash}}</li>
+            </ul>
+            <div class="card-footer d-flex justify-content-between">
+                <small class="text-muted">{{ post.user }}</small>
+                <small class="text-muted">{{ post.datetime }}</small>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     {% else %}
-    <div class="col-4">
+    <div class="col-4 text-center">
         <p>Login or sign up</p>
     </div>
     {% endif %}
-</div>
 
+</div>
 {% endblock %}

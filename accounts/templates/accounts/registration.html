@@ -6,11 +6,13 @@
 {% block content %}
 <div class="row justify-content-center mt-5">
   <div class="col-4">
-    <form action="" method="post">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <input type="submit" class="btn btn-info" value="Create Account">
-    </form>
+    <div class="p-3 forms">
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn buttons" value="Create Account">
+      </form>
+    </div>
   </div>
 </div>
 

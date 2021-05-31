@@ -1,4 +1,5 @@
 from web3 import Web3
+from django.core.cache import cache
 
 
 def sendTransaction(message):
@@ -20,3 +21,22 @@ def sendTransaction(message):
     tx = w3.eth.sendRawTransaction(signedTx.rawTransaction)
     txId = w3.toHex(tx)
     return txId
+
+
+def get_ip(request):
+    address = request.META.get('HTTP_X_FORWARDED_FOR')
+    if address:
+        ip = address.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def differentIp(ip, user):
+    if cache.get(f"{user}"):
+        if cache.get(f"{user}") != ip:
+            cache.set(f"{user}", ip, timeout=None)
+            return True
+    else:
+        cache.set(f"{user}", ip, timeout=None)
+        return False
