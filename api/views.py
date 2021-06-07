@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from .forms import PostForm
 from django.db.models import Count
 from datetime import timedelta
+from django.core.cache import cache
 
 
 def posts(request):
@@ -56,7 +57,15 @@ def newPost(request):
 
 
 def homepage(request):
-    postList = Post.objects.filter().order_by('-datetime')
+
+    if cache.get("cache"):
+        postList = cache.get("cache")
+        print("Data from cache")
+
+    else:
+        postList = Post.objects.filter().order_by('-datetime')
+        cache.set("cache", postList)
+        print("Data from DB")
 
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -66,7 +75,7 @@ def homepage(request):
             username = User.objects.get(username=f"{request.user}")
             new_post = Post(user=username, title=title, content=content, datetime=timezone.now())
             new_post.writeOnChain()
-
+            cache.expire("cache", timeout=0)
         return HttpResponseRedirect("/")
     else:
         form = PostForm()
@@ -75,8 +84,7 @@ def homepage(request):
 
 def userPage(request, pk):
     user = get_object_or_404(User, pk=pk)
-    context = {"user": user}
-    return render(request, "api/userPage.html", context)
+    return render(request, "api/userPage.html", {"user": user})
 
 
 @staff_member_required
