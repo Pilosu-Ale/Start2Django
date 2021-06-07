@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background: url(blue-crypto.jpg) repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.forms{
+    background: #C3E0E5;
+    color: #274472;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0.3em;
+
+}
+
+.buttons{
+    background: #274472;
+    color: white;
+}
+.buttons:hover{
+    border_style: solid;
+    background: #41729F;
+    color: white;
+}
+
+header{
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #274472;
+}
+
+.header-link{
+    color: #C3E0E5;
+}
+
+.header-link:hover{
+    color: white;
+}
+
+.card-custom{
+    background: #C3E0E5;
+    color: #274472;
+    border-style: solid;
+    border-color: #274472;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0.3em;
+}
+
+.card-item{
+    background: #C3E0E5;
+    color: #274472;
+    border-color: #274472;
+}
+
+.user-list{
+    background: #C3E0E5;
+}
