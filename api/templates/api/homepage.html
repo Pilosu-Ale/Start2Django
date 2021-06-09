@@ -6,7 +6,7 @@
 {% block content %}
 <div class="row justify-content-center">
     {% if request.user.is_authenticated %}
-    <div class="col-lg-5">
+    <div class="col-sm-auto">
         <div class="p-3 forms m-3">
             <form class="crispy" action="{% url 'homepage' %}" method="post">
                 {% csrf_token %}
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-sm-auto">
         {% for post in postList %}
         <div class="card m-3 rounded card-custom">
             <div class="card-body">
@@ -35,7 +35,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="col-4">
+    <div class="col m-5">
         <div class="center-content p-3 text-center">
             <p class="fs-1 text-white fw-bold">Login or sign up</p>
         </div>
