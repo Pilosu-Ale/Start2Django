@@ -63,3 +63,17 @@ header{
 .user-list{
     background: #C3E0E5;
 }
+
+.center-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem
+    margin: 2em;
+}
+@media (max-width: 500px) {
+.center_content{
+    min-width: 90%;
+}
+}
