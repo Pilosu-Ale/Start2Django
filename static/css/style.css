@@ -79,6 +79,5 @@ header{
 @media (max-width: 500px) {
 .center_content{
     min-width: 90%;
-    max-height: 40%;
 }
 }

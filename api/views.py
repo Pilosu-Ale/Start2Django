@@ -76,7 +76,7 @@ def homepage(request):
             new_post = Post(user=username, title=title, content=content, datetime=timezone.now())
             new_post.writeOnChain()
             cache.expire("cache", timeout=0)
-        return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/")
     else:
         form = PostForm()
     return render(request, "api/homepage.html", {'form': form, 'postList': postList})
